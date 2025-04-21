@@ -1,0 +1,317 @@
+/**
+    NAVBAR STYLES INDEX
+*/
+.navbar {
+    background-color: black;
+}
+.navbar-brand {
+    color: white;
+}
+
+.navbar-brand:hover {
+    color: white;
+}
+
+/* NAVBAR STYLES INDEX END
+*/
+
+
+/**
+    NAVBAR SECOND
+*/
+
+.navbar-second {
+    background-color: #d62828;
+}
+
+.navbar-text {
+    color: white;
+    font-size: 12px !important;
+}
+
+/**
+    NAVBAR SECOND HAMBURGER MENU
+*/
+.navbar-menu {
+    width: 35px;
+    height: 5px;
+    background-color: #fff;
+    margin: 5px 0;
+}
+
+/**
+    NAVBAR SECOND HAMBURGER MENU END
+*/
+
+
+
+
+/**
+    NAVBAR THIRD DROPDOWN
+*/
+
+
+
+.floating-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050;
+    border: none;
+    background-color: #fff;
+    border-radius: .25rem;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    animation: dropdownSlide 0.6s ease-out;
+  }
+  
+  @keyframes dropdownSlide {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -10%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0%);
+    }
+  }
+  
+  .navbar-center-wrapper {
+    position: relative;
+  }
+  
+  .dropdown-item {
+    padding: .5rem 1rem;
+    color: #000;
+    text-align: center;
+    min-width: 120px;
+    border-radius: .25rem;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f8f9fa;
+  }
+  
+  #collapseDropdownMen.collapse,
+  #collapseDropdownWomen.collapse,
+  #collapseDropdownKids.collapse {
+    display: none;
+    transition: none !important;
+  }
+  
+  #collapseDropdownMen.collapse.show,
+  #collapseDropdownWomen.collapse.show,
+  #collapseDropdownKids.collapse.show {
+    display: flex !important;
+  }
+  
+  .show-animation {
+    animation: dropdownSlide 0.6s ease-out;
+  }
+
+  /* NAVBAR THIRD DROPDOWN END
+*/
+
+
+
+
+/**
+    CONTENT CAROUSEL STYLES
+*/
+
+
+  .carousel-inner {
+    height: 605px;
+  }
+
+  .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .carousel-caption {
+    position: absolute;
+    top: 40%;
+    left: 10%;
+    transform: translateY(-50%);
+    color: white;
+    text-align: left;
+    max-width: 50%; 
+  }
+
+  .carousel-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .carousel-description {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  .btn-shop {
+    color: white;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-decoration: none;
+  }
+
+  .btn-shop:hover {
+    background-color: #0056b3;
+  }
+
+/*
+  CAROUSEL IN MOBILE VIEDWPORT
+  */
+
+  @media (max-width: 576px) {
+    .carousel-inner {
+      height: 341px; 
+    }
+    
+    .carousel-caption {
+      left: 5%;
+      right: 5%;
+      max-width: 90%;
+    }
+
+    .carousel-title {
+      font-size: 1.5rem;
+    }
+
+    .carousel-description {
+      font-size: 0.9rem;
+    }
+
+    .btn-primary {
+      font-size: 0.9rem;
+    }
+  }
+  
+
+  /* CONTENT CAROUSEL STYLES END
+*/
+
+
+/**
+    SALE SECTION STYLES
+*/
+.barong-sale-section {
+    background-color: #f8f9fa;
+    color: #333;
+  }
+
+  .barong-sale-section h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: maroon;
+  }
+
+  .barong-sale-section p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #000;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+
+  @media (max-width: 576px) {
+    .barong-sale-section p {
+      font-size: 1rem;
+    }
+  }
+
+  /* SALE SECTION STYLES END
+*/
+
+
+/**
+    MEN, WOMEN, KIDS SECTION STYLES
+*/
+
+.card-img-top {
+    height: 250px;
+    object-fit: cover;
+  }
+
+  @media (max-width: 576px) {
+    .card-img-top {
+      height: 180px;
+    }
+  }
+
+  /*
+    END OF M,W,K SECTION STYLES
+  */
+
+
+  /*
+    SLIDESHOW FEEDBACKS STYLES
+  */
+
+  .carousel-item {
+    transition: transform 0.6s ease, opacity 0.6s ease;
+  }
+
+  .text-warning {
+    font-size: 1.25rem;
+  }
+
+  @media (max-width: 576px) {
+    .lead {
+      font-size: 1rem;
+    }
+
+    .text-warning {
+      font-size: 1rem;
+    }
+  }
+
+
+  /*
+    END OF SLIDESHOW FEEDBACKS STYLES
+  */
+
+
+  /**
+    FOOTER STYLES
+  */
+  footer p, footer a {
+    font-size: 0.95rem;
+  }
+
+  footer a:hover {
+    color: #ffc107 !important;
+  }
+
+  .input-group-append .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  /* FOOTER STYLES END
+  */
+
+
+  /**
+    TOAST NOTIFICATION LOGIN/REGISTER STYLES
+  */
+  .toast-container {
+    z-index: 9999; 
+  }
+  
+  .toast {
+    min-width: 250px;
+  }
+  
