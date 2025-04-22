@@ -1,6 +1,6 @@
 <?php
 /**
- * DEPENDENCIES STORED
+ * DEPENDENCIES STORED:: CDNLINKS
  */
 include_once '../php/dependencies.php';
 
@@ -49,6 +49,9 @@ if (mysqli_num_rows($result) > 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title><?php echo $web_title; ?></title>
+
+    <!-- Custom Style Css -->
+    <link rel="stylesheet" href="../assets/css/index.admin.style.css">
     
      <!-- Bootstrap CSS -->
      <link rel="stylesheet" href="<?= $bootstrap_dependencies['bootstrap_css'] ?>">
@@ -69,49 +72,100 @@ if (mysqli_num_rows($result) > 0) {
     <script src="<?= $bootstrap_dependencies['bootstrap_js'] ?>"></script>
 </head>
 <body>
-    <!-- Dashboard Container -->
-    <div class="container mt-5">
-        <h2>Welcome, <?php echo $user_data['first_name'] . ' ' . $user_data['last_name']; ?></h2>
-        <div class="row">
-            <div class="col-md-6">
-                <h3>Your Profile Information</h3>
-                <ul class="list-group">
-                    <li class="list-group-item">Username: <?php echo $user_data['username']; ?></li>
-                    <li class="list-group-item">Email: <?php echo $user_data['email']; ?></li>
-                    <li class="list-group-item">Contact: <?php echo $user_data['contact_number']; ?></li>
-                    <li class="list-group-item">Address: <?php echo $user_data['complete_address']; ?></li>
-                </ul>
-            </div>
-            <div class="col-md-6">
-                <h3>Update Profile</h3>
-                <form action="update_profile.php" method="POST">
-                    <div class="form-group">
-                        <label for="first_name">First Name</label>
-                        <input type="text" class="form-control" name="first_name" id="first_name" value="<?php echo $user_data['first_name']; ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="last_name">Last Name</label>
-                        <input type="text" class="form-control" name="last_name" id="last_name" value="<?php echo $user_data['last_name']; ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="contact_number">Contact Number</label>
-                        <input type="text" class="form-control" name="contact_number" id="contact_number" value="<?php echo $user_data['contact_number']; ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="complete_address">Address</label>
-                        <input type="text" class="form-control" name="complete_address" id="complete_address" value="<?php echo $user_data['complete_address']; ?>" required>
-                    </div>
-                   
-                    
-                    <button type="submit" name="submit_update" class="btn btn-primary">Update</button>
-                </form>
-            </div>
-        </div>
-    </div>
 
-    <!-- Include Bootstrap JS (Optional: for functionality like modals, dropdowns, etc.) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body class="bg-white">
+
+<!-- SIDEBAR -->
+<div class="bg-dark text-white position-fixed vh-100 sidebar d-flex flex-column p-3" id="sidebar">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="fw-bold fs-4">
+    <div class="navbar-logo-title d-flex align-items-center gap-2">
+        <!--- DETALYE LOGO:: CHANGE IF WANT -->
+        <img src="../assets/images/detalye_logo.png" alt="Logo" class="rounded-circle mx-2">
+                                    <!--- WEB TITLE CONVERTED INTO UPPERCASE -->
+        <span class="fw-bold fs-5"><?php echo strtoupper($web_title); ?></span>
+      </div>
+    </div>
+  </div>
+  <ul class="nav nav-pills flex-column gap-2">
+  <li>
+    <a href="?page=home" class="nav-link text-white" data-bs-toggle="tooltip" data-bs-placement="right" title="Home">
+      <i class="bi bi-speedometer2"></i>
+      <span class="link-text">Dashboard</span>
+    </a>
+  </li>
+  <li>
+  <a href="?page=products" class="nav-link text-white" data-bs-toggle="tooltip" data-bs-placement="right" title="Products">
+    <i class="bi bi-box-seam"></i>
+    <span class="link-text">Products</span>
+  </a>
+</li>
+
+<li>
+  <a href="?page=orders" class="nav-link text-white" data-bs-toggle="tooltip" data-bs-placement="right" title="Orders">
+    <i class="bi bi-cart4"></i>
+    <span class="link-text">Orders</span>
+  </a>
+</li>
+
+<li>
+  <a href="?page=sales" class="nav-link text-white" data-bs-toggle="tooltip" data-bs-placement="right" title="Sales">
+    <i class="bi bi-cash-stack"></i>
+    <span class="link-text">Sales</span>
+  </a>
+</li>
+
+  <li>
+    <a href="?page=account" class="nav-link text-white" data-bs-toggle="tooltip" data-bs-placement="right" title="Account">
+      <i class="bi bi-person-fill"></i>
+      <span class="link-text">Account</span>
+    </a>
+  </li>
+</ul>
+
+</div>
+
+<!-- MAIN CONTENT  -->
+<div class="content" id="mainContent">
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg bg-light shadow sticky-top">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <button class="toggle-btn" id="toggleSidebar"><i class="bi bi-list"></i></button>
+      
+      <div class="d-flex align-items-center gap-3">
+        <!--- DIPLAY USERERNAME OF ADMIN -->
+        <div class="fw-semibold mx-3"><?php echo $user_data['username'];?></div>
+        <!--- LOGOUT ADMIN -->
+        <a href="#" class="text-decoration-none text-dark">
+        <i class="bi bi-box-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- PAGE ROUTE CONTENT -->
+  <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <?php
+      $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_SPECIAL_CHARS) ?: 'home';
+      $allowedPages = ['home', 'products', 'orders', 'sales', 'account', '404'];
+      if (!in_array($page, $allowedPages, true)) { $page = '404'; }
+      $viewFile = __DIR__ . '/templates/' . $page . '.php';
+      if (is_readable($viewFile)) {
+          include $viewFile;
+      } else {
+          http_response_code(404);
+          echo '<h2 class="text-center">404 - Page Not Found</h2>';
+      }
+    ?>
+  </main>
+  
+</div>
+
+
+<script src="../assets/js/index.admin.style.js"></script>
+
 </body>
 </html>

@@ -10,9 +10,9 @@ include_once 'config/database.php';
 
 $conn = dbConnection();
 if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+    die("Conn failed: " . mysqli_connect_error());
 }
-// === LOAD DEPENDENCIES ===
+// === LOAD DEPENDENCIES FOR CDN LINKS ===
 include_once 'php/dependencies.php';
 
 
@@ -132,7 +132,7 @@ if (isset($_POST['submit_registration'])) {
     <link rel="apple-touch-icon" sizes="96x96" href="assets/images/detalye_logo.png" type="image/png">
     <link rel="apple-touch-icon" sizes="72x72" href="assets/images/detalye_logo.png" type="image/png">
 
-
+    <!-- Custom Style -->
     <link rel="stylesheet" href="assets/css/index.style.css" type="text/css" />
 
     <title><?php echo $web_title; ?></title>
@@ -233,7 +233,8 @@ if (isset($_POST['submit_registration'])) {
         </button>
       </div>
       <div class="modal-body px-4 py-4">
-        <!-- Login Form -->
+
+        <!-- LOGIN FORM -->
         <div id="loginForm">
           <h5 class="text-center mb-4">Welcome Back!</h5>
           <form method="POST">
@@ -252,7 +253,7 @@ if (isset($_POST['submit_registration'])) {
           </form>
         </div>
 
-        <!-- Register Form -->
+        <!-- REGISTER FORM -->
         <div id="registerForm" style="display: none;">
           <h5 class="text-center mb-4">Register</h5>
           <form method="POST">
@@ -314,7 +315,7 @@ if (isset($_POST['submit_registration'])) {
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container d-flex flex-column align-items-center navbar-center-wrapper">
 
-    <!-- Centered Nav -->
+    <!-- CENTERED NAV-->
     <ul class="navbar-nav flex-row flex-wrap justify-content-center text-center">
       <li class="nav-item mx-2">
         <a class="nav-link font-weight-bolder text-dark" href="#">Home</a>
@@ -326,7 +327,7 @@ if (isset($_POST['submit_registration'])) {
         <a class="nav-link font-weight-bolder text-dark" href="#">Pricing</a>
       </li>
 
-      <!-- Collapsible Toggle -->
+      <!-- COLLAPSED TOGGGLE FOR CATEGORIES-->
       <li class="nav-item mx-2">
         <button class="btn btn-link nav-link font-weight-bolder text-dark" type="button" id="dropdownToggleMen">
           Men &#9662;
@@ -381,6 +382,7 @@ if (isset($_POST['submit_registration'])) {
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
+      <!--- CHANGE THIS TO THE IMAGE OF THE BARONG TAGALOG -->
       <img src="assets/images/slides_img/slide_1.jpg.jpg" class="d-block w-100 carousel-img" alt="...">
       <div class="carousel-caption">
         <h3 class="carousel-title font-weight-bolder">Barong Tagalog 1</h3>
@@ -389,6 +391,7 @@ if (isset($_POST['submit_registration'])) {
       </div>
     </div>
     <div class="carousel-item">
+      <!--- CHANGE THIS TO THE IMAGE OF THE BARONG TAGALOG -->
       <img src="assets/images/slides_img/slide_2.jpg" class="d-block w-100 carousel-img" alt="...">
       <div class="carousel-caption">
         <h3 class="carousel-title font-weight-bolder">Barong Tagalog 2</h3>
@@ -397,6 +400,7 @@ if (isset($_POST['submit_registration'])) {
       </div>
     </div>
     <div class="carousel-item">
+      <!--- CHANGE THIS TO THE IMAGE OF THE BARONG TAGALOG -->
       <img src="assets/images/slides_img/men-large.jpg" class="d-block w-100 carousel-img" alt="...">
       <div class="carousel-caption">
         <h3 class="carousel-title font-weight-bolder">Barong Tagalog 3</h3>
@@ -405,6 +409,8 @@ if (isset($_POST['submit_registration'])) {
       </div>
     </div>
   </div>
+
+   <!--- CAROUSEL CONTROLS-->
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
@@ -519,10 +525,11 @@ if (isset($_POST['submit_registration'])) {
     <div id="feedbackCarousel" class="carousel slide" data-ride="carousel" data-interval="5000">
       <div class="carousel-inner">
 
-        <!-- Feedback 1 -->
+        <!-- FEEDBACK 1 -->
         <div class="carousel-item active">
           <div class="row justify-content-center">
             <div class="col-md-8 text-center">
+               <!--- CHANGE THIS TO EXACT IMAGE OF THE PERSON WHO GAVE THE FEEDBACK -->
               <img src="assets/images/testimonials/user1.jpg" class="rounded-circle mb-3" width="100" height="100" alt="User 1">
               <h5 class="font-weight-bold">Juan Dela Cruz</h5>
               <small class="text-muted">March 10, 2025 | 2:30 PM</small>
@@ -534,10 +541,11 @@ if (isset($_POST['submit_registration'])) {
           </div>
         </div>
 
-        <!-- Feedback 2 -->
+        <!-- FEEDBACK 2 -->
         <div class="carousel-item">
           <div class="row justify-content-center">
             <div class="col-md-8 text-center">
+              <!--- CHANGE THIS TO EXACT IMAGE OF THE PERSON WHO GAVE THE FEEDBACK -->
               <img src="assets/images/testimonials/user2.jpg" class="rounded-circle mb-3" width="100" height="100" alt="User 2">
               <h5 class="font-weight-bold">Maria Santos</h5>
               <small class="text-muted">March 12, 2025 | 10:15 AM</small>
@@ -549,10 +557,11 @@ if (isset($_POST['submit_registration'])) {
           </div>
         </div>
 
-        <!-- Feedback 3 -->
+        <!-- FEEDBACK 3 -->
         <div class="carousel-item">
           <div class="row justify-content-center">
             <div class="col-md-8 text-center">
+               <!--- CHANGE THIS TO EXACT IMAGE OF THE PERSON WHO GAVE THE FEEDBACK -->
               <img src="assets/images/testimonials/user3.jpg" class="rounded-circle mb-3" width="100" height="100" alt="User 3">
               <h5 class="font-weight-bold">Pedro Gonzales</h5>
               <small class="text-muted">April 5, 2025 | 6:45 PM</small>
@@ -566,7 +575,7 @@ if (isset($_POST['submit_registration'])) {
 
       </div>
 
-      <!-- Controls -->
+      <!-- CAROUSEL CONTROLS -->
       <a class="carousel-control-prev" href="#feedbackCarousel" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
@@ -585,7 +594,7 @@ if (isset($_POST['submit_registration'])) {
   <div class="container text-md-left">
     <div class="row text-md-left">
 
-      <!-- Logo & About -->
+      <!-- ABOUT -->
       <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
         <h5 class="text-uppercase mb-4 font-weight-bold text-warning"><?php echo $web_title; ?></h5>
         <p>
@@ -593,7 +602,7 @@ if (isset($_POST['submit_registration'])) {
         </p>
       </div>
 
-      <!-- Quick Links -->
+      <!-- QUICK LINKS -->
       <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
         <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Quick Links</h5>
         <p><a href="#" class="text-light" style="text-decoration: none;">Home</a></p>
@@ -602,7 +611,7 @@ if (isset($_POST['submit_registration'])) {
         <p><a href="#" class="text-light" style="text-decoration: none;">Contact</a></p>
       </div>
 
-      <!-- Contact -->
+      <!-- CONTACT WEB DETAILS -->
       <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
         <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact</h5>
         <p><i class="fas fa-home mr-3"></i> Manila, Philippines</p>
@@ -611,7 +620,7 @@ if (isset($_POST['submit_registration'])) {
         <p><i class="fas fa-clock mr-3"></i> 24/7 Support</p>
       </div>
 
-      <!-- Newsletter & Social -->
+      <!--NEWSLETTER / SOCIAL -->
       <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mt-3">
         <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Stay Connected</h5>
         <form>
@@ -636,6 +645,7 @@ if (isset($_POST['submit_registration'])) {
 
     </div>
 
+     <!--- DELETE IF NEED -->
     <hr class="mb-4">
 
     <div class="row align-items-center">

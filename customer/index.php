@@ -1,7 +1,15 @@
 <?php
 /**
- * DEPENDENCIES STORED
+ * DEPENDENCIES STORED:: CDNLINKS
  */
+include_once '../php/dependencies.php';
+
+/**
+ * WEB TAB TITLE STORED
+ */
+include_once '../php/web-title.php';
+
+
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -42,6 +50,10 @@ if (mysqli_num_rows($result) > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $web_title; ?></title>
+
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="../assets/css/index.customer.style.css">
+
      <!-- Bootstrap CSS -->
      <link rel="stylesheet" href="<?= $bootstrap_dependencies['bootstrap_css'] ?>">
 
@@ -61,46 +73,35 @@ if (mysqli_num_rows($result) > 0) {
     <script src="<?= $bootstrap_dependencies['bootstrap_js'] ?>"></script>
 </head>
 <body>
-    <!-- Dashboard Container -->
-    <div class="container mt-5">
-        <h2>Welcome, <?php echo $user_data['first_name'] . ' ' . $user_data['last_name']; ?></h2>
-        <div class="row">
-            <div class="col-md-6">
-                <h3>Your Profile Information</h3>
-                <ul class="list-group">
-                    <li class="list-group-item">Username: <?php echo $user_data['username']; ?></li>
-                    <li class="list-group-item">Email: <?php echo $user_data['email']; ?></li>
-                    <li class="list-group-item">Contact: <?php echo $user_data['contact_number']; ?></li>
-                    <li class="list-group-item">Address: <?php echo $user_data['complete_address']; ?></li>
-                    
-                </ul>
-            </div>
-            <div class="col-md-6">
-                <h3>Update Profile</h3>
-                <form action="update_profile.php" method="POST">
-                    <div class="form-group">
-                        <label for="first_name">First Name</label>
-                        <input type="text" class="form-control" name="first_name" id="first_name" value="<?php echo $user_data['first_name']; ?>" required>
+    
+  <!-- NAVBAR FOR ICONS & COLLAPSED DROPDOWN USER ICON -->   
+  <nav class="navbar navbar-light bg-white">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fab fa-facebook-f social-icon"></i>
+                <i class="fab fa-twitter social-icon"></i>
+                <i class="fab fa-instagram social-icon"></i>
+            </a>
+            <div class="ml-auto">
+                <div class="dropdown">
+                    <a class="nav-link" href="#" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item text-center" href="#">My Account</a>
+                        <div class="dropdown-divider"></div>
+                        <div class="btn-container">
+                        <a class="dropdown-item btn btn-sm btn-danger" id="btn-danger" href="#">Logout</a>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="last_name">Last Name</label>
-                        <input type="text" class="form-control" name="last_name" id="last_name" value="<?php echo $user_data['last_name']; ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="contact_number">Contact Number</label>
-                        <input type="text" class="form-control" name="contact_number" id="contact_number" value="<?php echo $user_data['contact_number']; ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="complete_address">Address</label>
-                        <input type="text" class="form-control" name="complete_address" id="complete_address" value="<?php echo $user_data['complete_address']; ?>" required>
-                    </div>
-                    
-                    <button type="submit" name="submit_update" class="btn btn-primary">Update</button>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-
+    </nav>
   
+
+    <!-- NAVBAR USER ICON DROPDOWN FUNCTIONALITY -->
+     <script src="../assets/js/index.customer.navdropdown.js"></script>
+     
 </body>
 </html>
