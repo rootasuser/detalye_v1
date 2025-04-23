@@ -9,6 +9,7 @@ body {
 .social-icon {
     font-size: 1.2rem;
     margin: 0 10px;
+    color: #000;
 }
 .btn-container {
     padding: 0 5px; 

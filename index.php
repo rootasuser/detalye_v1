@@ -239,8 +239,8 @@ if (isset($_POST['submit_registration'])) {
           <h5 class="text-center mb-4">Welcome Back!</h5>
           <form method="POST">
             <div class="form-group">
-              <label>Username or Email</label>
-              <input type="text" name="usernameOrEmail" class="form-control" placeholder="Enter username or email" required>
+              <label>Username</label>
+              <input type="text" name="usernameOrEmail" class="form-control" placeholder="Enter username" required>
             </div>
             <div class="form-group">
               <label>Password</label>
@@ -258,8 +258,8 @@ if (isset($_POST['submit_registration'])) {
           <h5 class="text-center mb-4">Register</h5>
           <form method="POST">
           <div class="form-group">
-              <label>Username or Email</label>
-              <input type="text" name="usernameOrEmail" class="form-control" placeholder="Username or Email" required>
+              <label>Username</label>
+              <input type="text" name="usernameOrEmail" class="form-control" placeholder="Username" required>
             </div>
             <div class="form-group">
               <label>First Name</label>
