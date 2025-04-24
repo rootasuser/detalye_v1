@@ -545,7 +545,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                       <textarea class="form-control" name="editProductDescription" rows="2">${product.product_description || ''}</textarea>
                                     </div>
                                     <!-- Size -->
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 d-none">
                                       <label for="editProductSize" class="form-label">Size</label>
                                       <input type="text" class="form-control" name="editProductSize" value="${product.product_size || ''}">
                                     </div>

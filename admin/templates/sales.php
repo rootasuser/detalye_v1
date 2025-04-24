@@ -76,7 +76,8 @@ if (isset($_POST['export_csv'])) {
             </thead>
             <tbody>
                 <tr>
-                    <td>₱<?= number_format($total_sales, 2); ?></td>
+                <td>₱<?= number_format($total_sales ?? 0, 2); ?></td>
+
                     <td>
                         <!-- Button to trigger CSV export -->
                         <form method="POST" class="d-inline">

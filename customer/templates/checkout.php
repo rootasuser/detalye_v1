@@ -20,7 +20,6 @@ if (!$conn) {
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch user details
 $userDetails = [];
 $userQuery = "SELECT first_name, last_name, middle_initial, contact_number, complete_address FROM users WHERE id = ?";
 $stmt = $conn->prepare($userQuery);
@@ -31,7 +30,6 @@ if ($result->num_rows > 0) {
     $userDetails = $result->fetch_assoc();
 }
 
-// Fetch cart items
 $cartItems = [];
 $totalItems = 0;
 $totalPrice = 0.0;
@@ -63,27 +61,41 @@ while ($row = $result->fetch_assoc()) {
     $totalPrice += $row['subtotal'];
 }
 
-// Handle Checkout
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
-    // Generate order number
+    $paymentMethod = $_POST['payment_method'] ?? 'COD';
+    $referenceNumber = $_POST['reference_number'] ?? null;
     $orderNumber = 'ORD-' . strtoupper(substr(md5(uniqid(rand(), true)), 0, 8));
-    
-    // Start transaction
+
+    // Check for duplicate reference number
+    if ($paymentMethod === 'GCASH') {
+        $checkRefStmt = $conn->prepare("SELECT id FROM combined_orders_tbl WHERE reference_number = ?");
+        $checkRefStmt->bind_param("s", $referenceNumber);
+        $checkRefStmt->execute();
+        $checkResult = $checkRefStmt->get_result();
+
+        if ($checkResult->num_rows > 0) {
+            $_SESSION['toast_message'] = 'This GCash reference number has already been used. Please use a unique one.';
+            $_SESSION['toast_type'] = 'warning';
+          
+        }
+    }
+
     $conn->begin_transaction();
-    
+
     try {
         $orderSuccess = true;
-        
+
         foreach ($cartItems as $item) {
             $customSizes = $item['custom_sizes'] ?? null;
             $status = 'Pending';
             $itemSubtotal = $item['subtotal'];
 
             $orderStmt = $conn->prepare("INSERT INTO combined_orders_tbl 
-                (user_id, order_number, product_id, quantity, price, size, custom_sizes, total_amount, status) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                (user_id, order_number, product_id, quantity, price, size, custom_sizes, total_amount, payment_method, reference_number, status) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-            $orderStmt->bind_param("isidsssss", 
+            $orderStmt->bind_param("isidsssssss", 
                 $user_id, 
                 $orderNumber, 
                 $item['product_id'], 
@@ -92,27 +104,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                 $item['size'], 
                 $customSizes, 
                 $itemSubtotal, 
+                $paymentMethod,
+                $referenceNumber,
                 $status
             );
 
             if (!$orderStmt->execute()) {
                 $orderSuccess = false;
-                throw new Exception("Error inserting order: " . $orderStmt->error);
+                throw new Exception("Err inserting order: " . $orderStmt->error);
             }
         }
-        
 
         if ($orderSuccess) {
             $clearCartStmt = $conn->prepare("DELETE FROM customer_add_cart_tbl WHERE user_id = ?");
             $clearCartStmt->bind_param("i", $user_id);
             $clearCartStmt->execute();
-            
-   
+
             $conn->commit();
-            
+
             $_SESSION['toast_message'] = 'Order #' . $orderNumber . ' placed successfully!';
             $_SESSION['toast_type'] = 'success';
-      
         }
     } catch (Exception $e) {
         $conn->rollback();
@@ -120,6 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
         $_SESSION['toast_type'] = 'danger';
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -273,9 +285,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="form-group">
+                    <label class="mb-2">Payment Method:</label>
+
+                    <!-- Button Group for Payment Options -->
+                    <div class="btn-group w-100 mb-3" role="group" aria-label="Payment Method">
+                        <button type="button" class="btn btn-outline-warning d-flex align-items-center justify-content-center w-50" id="btn-cod" value="COD" onclick="selectPayment('COD')">
+                        <img src="../assets/images/payments/cod.png" alt="Cash on Delivery" style="width: 24px; height: 24px; margin-right: 8px;">
+                        Cash on Delivery
+                        </button>
+                        <button type="button" class="btn btn-outline-warning d-flex align-items-center justify-content-center w-50" id="btn-gcash" value="GCASH" onclick="selectPayment('GCASH')">
+                        <img src="../assets/images/payments/gcash.jpg" alt="GCash" style="width: 24px; height: 24px; margin-right: 8px;">
+                        GCash
+                        </button>
+                    </div>
+
+                    <!-- Hidden input for form submission -->
+                    <input type="hidden" name="payment_method" id="payment_method" value="COD">
+
+                    <!-- GCash Reference Number Field (Initially Hidden) -->
+                    <div class="form-group" id="referenceNumberGroup" style="display: none;">
+                        <label for="reference_number">GCash Reference Number</label>
+                        <input type="text" class="form-control" name="reference_number" id="reference_number" placeholder="Enter Reference Number">
+                    </div>
+                    </div>
+
                     
                     <div class="total-section">
-                        <button type="submit" name="place_order" class="btn btn-primary btn-block">Place Order</button>
+                        <button type="submit" name="place_order" class="btn btn-dark btn-block">Place Order</button>
                     </div>
                 </div>
             </div>
@@ -291,14 +329,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
 </div>
 
 <script>
+ function selectPayment(method) {
+    // Set hidden input value
+    document.getElementById('payment_method').value = method;
+
+    // Toggle active styles on buttons
+    document.getElementById('btn-cod').classList.remove('active');
+    document.getElementById('btn-gcash').classList.remove('active');
+
+    // Show/Hide Reference Number Input
+    if (method === 'GCASH') {
+      document.getElementById('btn-gcash').classList.add('active');
+      document.getElementById('referenceNumberGroup').style.display = 'block';
+    } else {
+      document.getElementById('btn-cod').classList.add('active');
+      document.getElementById('referenceNumberGroup').style.display = 'none';
+    }
+  }
+
+  window.onload = function () {
+    selectPayment(document.getElementById('payment_method').value);
+  };
+
+
+// Loading Spinner
     $(document).ready(function() {
-        // Initially hide the loading overlay
+
         $('.loading-overlay').hide();
-        
-        // Show loading spinner on form submit
+    
         $('#checkoutForm').on('submit', function(e) {
-            // Don't prevent default here, let the form submit naturally
-            // Show loading spinner
             $('.loading-overlay').show();
         });
     });

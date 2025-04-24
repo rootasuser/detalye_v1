@@ -356,6 +356,23 @@ $product_res = mysqli_query($conn, $product_sql);
     </nav>
 </div>
 
+
+<!-- Chart Modal -->
+<div class="modal fade" id="viewChartExample" tabindex="-1" role="dialog" aria-labelledby="viewChartExampleLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document"> <!-- Use modal-lg for a larger modal -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+                <img src="../assets/images/chart.png" alt="" style="width: 100%; height: auto;">
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
     function showCustomSizes(productId) {
         var customSizeDiv = document.getElementById("customSize-" + productId);

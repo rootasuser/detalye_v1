@@ -9,6 +9,7 @@ include_once 'php/web-title.php';
 include_once 'config/database.php';
 
 $conn = dbConnection();
+
 if (!$conn) {
     die("Conn failed: " . mysqli_connect_error());
 }
@@ -90,7 +91,7 @@ if (isset($_POST['submit_registration'])) {
     if (mysqli_query($conn, $insertQuery)) {
         $_SESSION['toast_success'] = "Registration successful!";
         } else {
-                $_SESSION['toast_error'] = "An error occurred. Please try again.";
+                $_SESSION['toast_error'] = "An err occurred. Please try again.";
             }
         }
     }
@@ -112,7 +113,7 @@ if (isset($_POST['submit_registration'])) {
     <meta name="google" content="notranslate">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- Favicon and Apple Touch Icons -->
+    <!-- Favicon and Apple Touch Icons Browser Tab Icon-->
     <link rel="icon" href="assets/images/detalye_logo.png" type="image/png">
     <link rel="apple-touch-icon" href="assets/images/detalye_logo.png" type="image/png">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/detalye_logo.png" type="image/png">
@@ -136,10 +137,10 @@ if (isset($_POST['submit_registration'])) {
     <link rel="stylesheet" href="assets/css/index.style.css" type="text/css" />
 
     <title><?php echo $web_title; ?></title>
-     <!-- Bootstrap CSS -->
+     <!-- BS4 CSS -->
      <link rel="stylesheet" href="<?= $bootstrap_dependencies['bootstrap_css'] ?>">
 
-    <!-- BS Icon -->
+    <!-- BS4 Icon -->
     <link rel="stylesheet" href="<?= $bootstrap_dependencies['bootstrap_icon'] ?>">
 
     <!-- Font Awesome -->
@@ -151,8 +152,12 @@ if (isset($_POST['submit_registration'])) {
     <!-- jQuery Slim -->
     <script src="<?= $bootstrap_dependencies['jquery_slim'] ?>"></script>
 
-    <!-- Bootstrap JS -->
+    <!-- BS4 JS -->
     <script src="<?= $bootstrap_dependencies['bootstrap_js'] ?>"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     
@@ -191,7 +196,8 @@ if (isset($_POST['submit_registration'])) {
 <!--- NAVBAR FOR TITLE AND LOGO ONLY -->
 <nav class="navbar">
     <div class="container-fluid">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="index.php">
+    <!--- CHANGE THIS TO THE LOGO IF YOU WANT -->
     <img src="assets/images/detalye_logo.png" width="30" height="30" class="d-inline-block align-top rounded-circle" alt="">
     <?php echo $web_title; ?>
   </a>
@@ -204,10 +210,8 @@ if (isset($_POST['submit_registration'])) {
   <a class="navbar-brand navbar-text" href="#">Authentic & Premium Philippine Quality @ <?php echo $web_title; ?></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
   aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon">
-    <div class="navbar-menu"></div>
-    <div class="navbar-menu"></div>
-    <div class="navbar-menu"></div>
+  <span class="navbar-toggler-icon" style="color: #fff; background-color: #000;">
+    <i class="bi bi-list"></i>
   </span>
 </button>
 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -320,13 +324,7 @@ if (isset($_POST['submit_registration'])) {
       <li class="nav-item mx-2">
         <a class="nav-link font-weight-bolder text-dark" href="index.php">Home</a>
       </li>
-      <li class="nav-item mx-2">
-        <a class="nav-link font-weight-bolder text-dark" href="index.php">Features</a>
-      </li>
-      <li class="nav-item mx-2">
-        <a class="nav-link font-weight-bolder text-dark" href="index.php">Pricing</a>
-      </li>
-
+  
       <!-- COLLAPSED TOGGGLE FOR CATEGORIES-->
       <li class="nav-item mx-2">
         <button class="btn btn-link nav-link font-weight-bolder text-dark" type="button" id="dropdownToggleMen">
@@ -347,26 +345,26 @@ if (isset($_POST['submit_registration'])) {
 
     <!-- MEN Dropdown -->
     <div class="floating-dropdown" id="collapseDropdownMen" style="display: none;">
-      <a class="dropdown-item" href="#">Budget Barongs</a>
-      <a class="dropdown-item" href="#">White Barong Tagalog</a>
-      <a class="dropdown-item" href="#">Black Barong Tagalogs</a>
-      <a class="dropdown-item" href="#">Barong Coats / Barong Jackets</a>
-      <a class="dropdown-item" href="#">Short Sleeve Barong</a>
-      <a class="dropdown-item" href="#">Colored Modern Barong</a>
+      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#portalModal">Budget Barongs</a>
+      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#portalModal">White Barong Tagalog</a>
+      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#portalModal">Black Barong Tagalogs</a>
+      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#portalModal">Barong Coats / Barong Jackets</a>
+      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#portalModal">Short Sleeve Barong</a>
+      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#portalModal">Colored Modern Barong</a>
     </div>
 
     <!-- WOMEN Dropdown -->
     <div class="floating-dropdown" id="collapseDropdownWomen" style="display: none;">
-      <a class="dropdown-item" href="#">Modern Filipiniana</a>
-      <a class="dropdown-item" href="#">Bolero Filipiniana Sleeves</a>
-      <a class="dropdown-item" href="#">Traditional Filipiniana</a>
-      <a class="dropdown-item" href="#">Alampay & Wrap Around</a>
+      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#portalModal">Modern Filipiniana</a>
+      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#portalModal">Bolero Filipiniana Sleeves</a>
+      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#portalModal">Traditional Filipiniana</a>
+      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#portalModal">Alampay & Wrap Around</a>
     </div>
 
     <!-- KIDS Dropdown -->
     <div class="floating-dropdown" id="collapseDropdownKids" style="display: none;">
-      <a class="dropdown-item" href="#">Boys Barong Tagalog</a>
-      <a class="dropdown-item" href="#">Girls Filipiniana</a>
+      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#portalModal">Boys Barong Tagalog</a>
+      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#portalModal">Girls Filipiniana</a>
     </div>
 
   </div>
@@ -387,7 +385,7 @@ if (isset($_POST['submit_registration'])) {
       <div class="carousel-caption">
         <h3 class="carousel-title font-weight-bolder">Barong Tagalog 1</h3>
         <p class="carousel-description font-weight-bolder">Elegant design for any occasion. Get yours today!</p>
-        <a href="#shop-now" class="btn btn-warning font-weight-bolder"><i class="bi bi-cart-plus"></i> Shop Now</a>
+        <a href="#shop-now" class="btn btn-warning font-weight-bolder" data-toggle="modal" data-target="#portalModal"><i class="bi bi-cart-plus"></i> Shop Now</a>
       </div>
     </div>
     <div class="carousel-item">
@@ -396,7 +394,7 @@ if (isset($_POST['submit_registration'])) {
       <div class="carousel-caption">
         <h3 class="carousel-title font-weight-bolder">Barong Tagalog 2</h3>
         <p class="carousel-description font-weight-bolder">Classic style with modern fit. Shop now and look great!</p>
-        <a href="#shop-now" class="btn btn-warning font-weight-bolder"><i class="bi bi-cart-plus"></i> Shop Now</a>
+        <a href="#shop-now" class="btn btn-warning font-weight-bolder"><i class="bi bi-cart-plus" data-toggle="modal" data-target="#portalModal"></i> Shop Now</a>
       </div>
     </div>
     <div class="carousel-item">
@@ -405,7 +403,7 @@ if (isset($_POST['submit_registration'])) {
       <div class="carousel-caption">
         <h3 class="carousel-title font-weight-bolder">Barong Tagalog 3</h3>
         <p class="carousel-description font-weight-bolder">Traditional craftsmanship meets contemporary elegance.</p>
-        <a href="#shop-now" class="btn btn-warning font-weight-bolder"><i class="bi bi-cart-plus"></i> Shop Now</a>
+        <a href="#shop-now" class="btn btn-warning font-weight-bolder"><i class="bi bi-cart-plus" data-toggle="modal" data-target="#portalModal"></i> Shop Now</a>
       </div>
     </div>
   </div>
@@ -440,22 +438,24 @@ if (isset($_POST['submit_registration'])) {
       <!-- Subcategory 1 -->
       <div class="col-md-4 mb-4">
         <div class="card shadow-sm h-100">
+          <!-- Change this image for Barong Tagalog -->
           <img src="assets/images/slides_img/slide_1.jpg.jpg" class="card-img-top" alt="Barong Tagalog">
           <div class="card-body text-center">
             <h5 class="card-title font-weight-bold">Barong Tagalog</h5>
             <p class="card-text">Classic, hand-embroidered Barong Tagalog for all occasions.</p>
-            <a href="#" class="btn btn-outline-primary">Shop Now</a>
+            <a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#portalModal">Shop Now</a>
           </div>
         </div>
       </div>
       <!-- Subcategory 2 -->
       <div class="col-md-4 mb-4">
         <div class="card shadow-sm h-100">
+          <!-- Change this image for Formal Wear -->
           <img src="assets/images/slides_img/slide_2.jpg" class="card-img-top" alt="Men's Formal Wear">
           <div class="card-body text-center">
             <h5 class="card-title font-weight-bold">Formal Wear</h5>
             <p class="card-text">Modern Filipino formalwear with traditional craftsmanship.</p>
-            <a href="#" class="btn btn-outline-primary">Shop Now</a>
+            <a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#portalModal">Shop Now</a>
           </div>
         </div>
       </div>
@@ -472,11 +472,12 @@ if (isset($_POST['submit_registration'])) {
       <!-- Subcategory: Filipiniana -->
       <div class="col-md-4 mb-4">
         <div class="card shadow-sm h-100">
+          <!--- CHANGE THIS TO THE IMAGE OF THE FILIPINIANA -->
           <img src="assets/images/slides_img/slide_1.jpg.jpg" class="card-img-top" alt="Filipiniana">
           <div class="card-body text-center">
             <h5 class="card-title font-weight-bold">Filipiniana</h5>
             <p class="card-text">Elegant traditional outfits for modern Filipinas.</p>
-            <a href="#" class="btn btn-outline-primary">Shop Now</a>
+            <a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#portalModal">Shop Now</a>
           </div>
         </div>
       </div>
@@ -493,11 +494,12 @@ if (isset($_POST['submit_registration'])) {
       <!-- Subcategory: Kids Barong -->
       <div class="col-md-4 mb-4">
         <div class="card shadow-sm h-100">
+          <!--- CHANGE THIS TO THE IMAGE OF THE KIDS BARONG -->
           <img src="assets/images/slides_img/men-large.jpg" class="card-img-top" alt="Kids Barong">
           <div class="card-body text-center">
             <h5 class="card-title font-weight-bold">Kids Barong</h5>
             <p class="card-text">Adorable and elegant Barong for boys of all ages.</p>
-            <a href="#" class="btn btn-outline-primary">Shop Now</a>
+            <a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#portalModal">Shop Now</a>
           </div>
         </div>
       </div>

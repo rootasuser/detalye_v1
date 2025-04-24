@@ -48,6 +48,8 @@ CREATE TABLE IF NOT EXISTS combined_orders_tbl (
     quantity INT NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     size VARCHAR(10),
+    payment_method VARCHAR(50) NOT NULL,
+    reference_number VARCHAR(255),
     custom_sizes TEXT,
     total_amount DECIMAL(10, 2) NOT NULL,
     status ENUM('Pending', 'On Process', 'Delivered') NOT NULL DEFAULT 'Pending',

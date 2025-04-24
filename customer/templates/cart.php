@@ -33,28 +33,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_item'])) {
     $product_id = intval($_POST['product_id']);
     $quantity = intval($_POST['quantity']);
     
-    // Start transaction
     $conn->begin_transaction();
     
     try {
-        // First, get the item from cart to verify it exists and belongs to the user
         $verifyStmt = $conn->prepare("SELECT * FROM customer_add_cart_tbl WHERE id = ? AND user_id = ?");
         $verifyStmt->bind_param("ii", $cart_id, $user_id);
         $verifyStmt->execute();
         $result = $verifyStmt->get_result();
         
         if ($result->num_rows > 0) {
-            // Update product quantity - add back the removed quantity
+
             $updateProductStmt = $conn->prepare("UPDATE products_tbl SET product_quantity = product_quantity + ? WHERE id = ?");
             $updateProductStmt->bind_param("ii", $quantity, $product_id);
             $updateProductStmt->execute();
             
-            // Now remove the item from cart
             $deleteStmt = $conn->prepare("DELETE FROM customer_add_cart_tbl WHERE id = ? AND user_id = ?");
             $deleteStmt->bind_param("ii", $cart_id, $user_id);
             $deleteStmt->execute();
             
-            // If everything is successful, commit the transaction
             $conn->commit();
             $_SESSION['toast_message'] = 'Item removed from cart and quantity restored';
             $_SESSION['toast_type'] = 'success';
@@ -62,7 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_item'])) {
             throw new Exception("Cart item not found or doesn't belong to the user");
         }
     } catch (Exception $e) {
-        // If there's an error, roll back the transaction
         $conn->rollback();
         $_SESSION['toast_message'] = 'Error removing item: ' . $e->getMessage();
         $_SESSION['toast_type'] = 'danger';
@@ -168,11 +163,11 @@ while ($row = $result->fetch_assoc()) {
     }
 </style>
 
-<div class="container mt-4">
+<div class="container mt-5 mb-5">
     <h3 class="mb-3">Your Shopping Cart</h3>
     
     <?php if (empty($cartItems)): ?>
-        <div class="alert alert-info">
+        <div class="alert alert-light mt-5 mb-5" style="height: 250px; color: #000;">
             Your cart is empty.
         </div>
     <?php else: ?>

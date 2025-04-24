@@ -271,7 +271,8 @@ if (isset($_SESSION['user_id'])) {
         if (!in_array($page, $allowedPages, true)) { $page = '404'; }
         $viewFile = __DIR__ . '/templates/' . $page . '.php';
         if (is_readable($viewFile)) { include $viewFile; } else { http_response_code(404); echo '<h2>404 - Page Not Found</h2>'; }
-    ?>        
+    ?>  
+          
 </div>
 
 

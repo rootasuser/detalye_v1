@@ -57,16 +57,10 @@ if (isset($_POST['update'])) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Account Information</title>
-</head>
-<body>
-
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <div class="container mt-5">
 <div class="card shadow border-0 rounded-3">
@@ -122,5 +116,4 @@ if (isset($_SESSION['message'])) {
 </div>
 </div>
 
-</body>
-</html>
+

@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'], $_POST['n
 }
 
 // Fetch orders
-$query = "SELECT co.*, u.first_name, u.last_name, u.middle_initial, u.contact_number, u.complete_address, p.product_name 
+$query = "SELECT co.*, u.first_name, u.last_name, u.middle_initial, u.contact_number, u.complete_address, p.product_name, p.product_image 
           FROM combined_orders_tbl AS co 
           JOIN users AS u ON co.user_id = u.id 
           JOIN products_tbl AS p ON co.product_id = p.id 
@@ -58,70 +58,82 @@ $result = $conn->query($query);
     <meta charset="UTF-8">
     <title>Orders</title>
     <style>
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-        }
+    th {
+    text-wrap: nowrap;
+}
 
-        .modal-content {
-            background-color: #fefefe;
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-            text-align: center;
-        }
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
 
-        .close {
-            color: red;
-            float: right;
-            justify-content: end;
-            align-items: end;
-            font-size: 58px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+}
 
-        .close:hover {
-            color: black;
-        }
+.close {
+    color: red;
+    float: right;
+    font-size: 58px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-        .qr-code {
-            max-width: 200px;
-            max-height: 200px;
-            margin: 20px auto;
-        }
+.close:hover {
+    color: black;
+}
 
-        .order-details {
-            margin: 20px 0;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            text-align: left;
-        }
+.qr-code {
+    max-width: 200px;
+    max-height: 200px;
+    margin: 20px auto;
+}
 
-        .print-button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+.order-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px;
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.order-details div {
+    padding: 5px;
+    border-radius: 3px;
+    background-color: #f9f9f9;
+}
+
+.print-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
     </style>
     <script>
         function searchOrders() {
@@ -176,8 +188,8 @@ $result = $conn->query($query);
             };
         }
 
-        function openPrintModal(orderId, orderNumber, customerName, contactNumber, address, productName, qty, size, customSizesFormatted, totalAmount, status) {
-    // Create QR code data with Custom Sizes included
+        function openPrintModal(orderId, orderNumber, customerName, contactNumber, address, productName, qty, size, payment_method, reference_number, customSizesFormatted, totalAmount, status) {
+
     const qrData = encodeURIComponent(`
         Order ID: ${orderId}
         Order Number: ${orderNumber}
@@ -187,17 +199,18 @@ $result = $conn->query($query);
         Product: ${productName}
         Quantity: ${qty}
         Size: ${size}
+        Payment Method: ${payment_method}
+        Reference Number: ${reference_number}
         Custom Sizes:
         ${customSizesFormatted.replace(/\\n/g, '\n')}
         Total Amount: ₱${totalAmount}
         Status: ${status}
     `);
 
-    // Generate QR code URL
+    
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${qrData}`;
     qrImage.src = qrUrl;
 
-    // Set order details in the modal
     orderDetails.innerHTML = `
         <h4>Order Details</h4>
         <p style="display: none;"><strong>Order ID:</strong> ${orderId}</p>
@@ -208,12 +221,14 @@ $result = $conn->query($query);
         <p><strong>Product:</strong> ${productName}</p>
         <p><strong>Quantity:</strong> ${qty}</p>
         <p><strong>Size:</strong> ${size}</p>
+        <p><strong>Payment Method:</strong> ${payment_method}</p>
+        <p><strong>Reference Number:</strong> ${reference_number}</p>
         <p><strong>Custom Sizes:</strong><br>${customSizesFormatted.replace(/\\n/g, '<br>')}</p>
         <p><strong>Total Amount:</strong> ₱${totalAmount}</p>
         <p><strong>Status:</strong> ${status}</p>
     `;
 
-    // Show modal
+
     modal.style.display = "block";
 }
 
@@ -238,12 +253,15 @@ window.onload = function() {
                 <tr>
                     <th>#</th>
                     <th>Order #</th>
+                    <th>Product Image</th>
                     <th>Customer</th>
                     <th>Contact</th>
                     <th>Address</th>
                     <th>Product</th>
                     <th>Qty</th>
                     <th>Size</th>
+                    <th>Payment Method</th>
+                    <th>Reference Number</th>
                     <th>Custom Sizes</th>
                     <th>Total</th>
                     <th>Status</th>
@@ -257,12 +275,21 @@ window.onload = function() {
                     <tr>
                         <td><?= $row['id']; ?></td>
                         <td><?= htmlspecialchars($row['order_number'] ?? ''); ?></td>
+                        <td>
+                        <?php if (!empty($row['product_image'])): ?>
+                            <img src="<?= htmlspecialchars($row['product_image']) ?>" alt="Product Image" style="max-width: 100px;">
+                        <?php else: ?>
+                            <span>No Image</span>
+                        <?php endif; ?>
+                    </td>
                         <td><?= htmlspecialchars($row['first_name'] . ' ' . $row['last_name'] ?? ''); ?></td>
                         <td><?= htmlspecialchars($row['contact_number'] ?? ''); ?></td>
                         <td><?= htmlspecialchars($row['complete_address'] ?? ''); ?></td>
                         <td><?= htmlspecialchars($row['product_name'] ?? ''); ?></td>
                         <td><?= $row['quantity'] ?? 0; ?></td>
                         <td><?= htmlspecialchars($row['size'] ?? ''); ?></td>
+                        <td><?= htmlspecialchars($row['payment_method'] ?? '');?></td>
+                        <td><?= htmlspecialchars($row['reference_number'] ?? ''); ?></td>
                         <td>
                         <?php
                             $customSizes = $row['custom_sizes'] ?? '';
@@ -298,12 +325,17 @@ window.onload = function() {
                         <td>
                             <form method="POST" class="d-flex gap-2 align-items-center justify-content-center">
                                 <input type="hidden" name="order_id" value="<?= $row['id']; ?>">
-                                <select name="new_status" class="form-select form-select-sm w-auto" required>
+                                <select name="new_status" class="form-select form-select-sm w-auto mx-2" required 
+                                    <?= $row['status'] === 'Delivered' ? 'disabled' : ''; ?>>
                                     <option value="" disabled selected>Choose</option>
+                                    <option value="Pending" <?= $row['status'] === 'Pending' ? 'selected' : ''; ?>>Pending</option>
                                     <option value="On Process" <?= $row['status'] === 'On Process' ? 'selected' : ''; ?>>On Process</option>
                                     <option value="Delivered" <?= $row['status'] === 'Delivered' ? 'selected' : ''; ?>>Delivered</option>
                                 </select>
-                                <button type="submit" class="btn btn-sm btn-success">Save</button>
+                                <button type="submit" class="btn btn-sm btn-success" 
+                                    <?= $row['status'] === 'Delivered' ? 'disabled' : ''; ?>>
+                                    Save
+                                </button>
                             </form>
                         </td>
                         <td>
@@ -336,6 +368,8 @@ window.onload = function() {
                                 '<?= htmlspecialchars($row['product_name'] ?? '') ?>',
                                 '<?= htmlspecialchars($row['quantity'] ?? 0) ?>',
                                 '<?= htmlspecialchars($row['size'] ?? '') ?>',
+                                '<?= htmlspecialchars($row['payment_method'] ?? '') ?>',
+                                '<?= htmlspecialchars($row['reference_number'] ?? '') ?>',
                                 '<?= $formattedCustomSizes ?>',
                                 '<?= htmlspecialchars(number_format($row['total_amount'] ?? 0, 2)) ?>',
                                 '<?= htmlspecialchars($row['status'] ?? '') ?>'
