@@ -131,7 +131,39 @@ if (mysqli_num_rows($result) > 0) {
 </head>
 <body>
     
-  <!-- NAVBAR FOR ICONS & COLLAPSED DROPDOWN USER ICON -->   
+<?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+
+include_once '../config/database.php';
+
+$cartCount = 0;
+$orderCount = 0;
+
+if (isset($_SESSION['user_id'])) {
+    $conn = dbConnection();
+    if ($conn) {
+        $user_id = $_SESSION['user_id'];
+
+        // Get Cart Count
+        $stmt = $conn->prepare("SELECT SUM(quantity) AS total_items FROM customer_add_cart_tbl WHERE user_id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $cartData = $result->fetch_assoc();
+        $cartCount = $cartData['total_items'] ?? 0;
+
+        // Get Order Count
+        $stmt = $conn->prepare("SELECT COUNT(*) AS total_orders FROM combined_orders_tbl WHERE user_id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $orderData = $result->fetch_assoc();
+        $orderCount = $orderData['total_orders'] ?? 0;
+    }
+}
+?>
+
+<!-- NAVBAR FOR ICONS & COLLAPSED DROPDOWN USER ICON -->
 <nav class="navbar navbar-light bg-white">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
@@ -139,23 +171,46 @@ if (mysqli_num_rows($result) > 0) {
             <i class="fab fa-twitter social-icon"></i>
             <i class="fab fa-instagram social-icon"></i>
         </a>
-        <div class="ml-auto">
+        <div class="ml-auto d-flex align-items-center">
+            <!-- Order Icon with Badge -->
+            <a class="nav-link position-relative me-3" href="?page=orders">
+                <i class="fas fa-box text-dark"></i>
+                <?php if ($orderCount > 0): ?>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                        <?= $orderCount ?>
+                        <span class="visually-hidden"></span>
+                    </span>
+                <?php endif; ?>
+            </a>
+
+            <!-- Cart Icon with Badge -->
+            <a class="nav-link position-relative me-3" href="?page=cart">
+                <i class="fas fa-shopping-cart text-dark"></i>
+                <?php if ($cartCount > 0): ?>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        <?= $cartCount ?>
+                        <span class="visually-hidden"></span>
+                    </span>
+                <?php endif; ?>
+            </a>
+
             <div class="dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-user text-dark rounded"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item text-center" href="#">My Account</a>
+                    <a class="dropdown-item text-center" href="?page=account">My Account</a>
                     <div class="dropdown-divider"></div>
                     <div class="btn-container">
-                        <a class="dropdown-item btn btn-sm btn-danger" style="background-color: red; color: #fff; text-align: center;" href="#">Logout</a>
+                        <a class="dropdown-item btn btn-sm btn-danger" style="background-color: red; color: #fff; text-align: center;" href="logout.php">Logout</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </nav>
-    
+
+
 <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
     <div class="container">
         <!-- Logo/Brand -->
@@ -174,10 +229,10 @@ if (mysqli_num_rows($result) > 0) {
                 <!-- You can add navigation items here if needed -->
             </ul>
             
-            <!-- Search form -->
-            <form class="form-inline my-2 my-lg-0 search-form">
+           <!-- Search form -->
+            <form class="form-inline my-2 my-lg-0 search-form" method="GET" action="?page=shop">
                 <div class="input-group w-100">
-                    <input type="text" class="form-control" placeholder="Search product here..." aria-label="Search">
+                    <input type="text" name="search" class="form-control" placeholder="Search product here..." aria-label="Search">
                     <div class="input-group-append">
                         <button class="btn btn-primary search-button" type="submit">
                             <i class="fa fa-search"></i>
@@ -185,6 +240,7 @@ if (mysqli_num_rows($result) > 0) {
                     </div>
                 </div>
             </form>
+
         </div>
     </div>
 </nav>
@@ -211,7 +267,7 @@ if (mysqli_num_rows($result) > 0) {
 <div class="container-fluid mt-2">
     <?php
         $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_SPECIAL_CHARS) ?: 'home';
-        $allowedPages = ['home', 'shop', 'contact', 'account'];
+        $allowedPages = ['home', 'shop', 'contact', 'cart', 'checkout', 'about', 'policy', 'orders', 'account'];
         if (!in_array($page, $allowedPages, true)) { $page = '404'; }
         $viewFile = __DIR__ . '/templates/' . $page . '.php';
         if (is_readable($viewFile)) { include $viewFile; } else { http_response_code(404); echo '<h2>404 - Page Not Found</h2>'; }
@@ -226,15 +282,17 @@ if (mysqli_num_rows($result) > 0) {
     <script>
         document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
-          // clear all
           document.querySelectorAll('.nav-link').forEach(l => {
             l.classList.remove('bg-danger');
             l.classList.remove('text-white');
           });
-          // highlight this one
           link.classList.add('bg-danger', 'text-white');
         });
       });
     </script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

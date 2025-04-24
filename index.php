@@ -318,13 +318,13 @@ if (isset($_POST['submit_registration'])) {
     <!-- CENTERED NAV-->
     <ul class="navbar-nav flex-row flex-wrap justify-content-center text-center">
       <li class="nav-item mx-2">
-        <a class="nav-link font-weight-bolder text-dark" href="#">Home</a>
+        <a class="nav-link font-weight-bolder text-dark" href="index.php">Home</a>
       </li>
       <li class="nav-item mx-2">
-        <a class="nav-link font-weight-bolder text-dark" href="#">Features</a>
+        <a class="nav-link font-weight-bolder text-dark" href="index.php">Features</a>
       </li>
       <li class="nav-item mx-2">
-        <a class="nav-link font-weight-bolder text-dark" href="#">Pricing</a>
+        <a class="nav-link font-weight-bolder text-dark" href="index.php">Pricing</a>
       </li>
 
       <!-- COLLAPSED TOGGGLE FOR CATEGORIES-->
@@ -440,7 +440,7 @@ if (isset($_POST['submit_registration'])) {
       <!-- Subcategory 1 -->
       <div class="col-md-4 mb-4">
         <div class="card shadow-sm h-100">
-          <img src="assets/images/categories/men-barong.jpg" class="card-img-top" alt="Barong Tagalog">
+          <img src="assets/images/slides_img/slide_1.jpg.jpg" class="card-img-top" alt="Barong Tagalog">
           <div class="card-body text-center">
             <h5 class="card-title font-weight-bold">Barong Tagalog</h5>
             <p class="card-text">Classic, hand-embroidered Barong Tagalog for all occasions.</p>
@@ -451,7 +451,7 @@ if (isset($_POST['submit_registration'])) {
       <!-- Subcategory 2 -->
       <div class="col-md-4 mb-4">
         <div class="card shadow-sm h-100">
-          <img src="assets/images/categories/men-formal.jpg" class="card-img-top" alt="Men's Formal Wear">
+          <img src="assets/images/slides_img/slide_2.jpg" class="card-img-top" alt="Men's Formal Wear">
           <div class="card-body text-center">
             <h5 class="card-title font-weight-bold">Formal Wear</h5>
             <p class="card-text">Modern Filipino formalwear with traditional craftsmanship.</p>
@@ -459,17 +459,7 @@ if (isset($_POST['submit_registration'])) {
           </div>
         </div>
       </div>
-      <!-- Subcategory 3 -->
-      <div class="col-md-4 mb-4">
-        <div class="card shadow-sm h-100">
-          <img src="assets/images/categories/men-accessories.jpg" class="card-img-top" alt="Accessories">
-          <div class="card-body text-center">
-            <h5 class="card-title font-weight-bold">Accessories</h5>
-            <p class="card-text">Complete your look with traditional Filipino accessories.</p>
-            <a href="#" class="btn btn-outline-primary">Shop Now</a>
-          </div>
-        </div>
-      </div>
+
     </div>
   </div>
 </section>
@@ -482,7 +472,7 @@ if (isset($_POST['submit_registration'])) {
       <!-- Subcategory: Filipiniana -->
       <div class="col-md-4 mb-4">
         <div class="card shadow-sm h-100">
-          <img src="assets/images/categories/women-filipiniana.jpg" class="card-img-top" alt="Filipiniana">
+          <img src="assets/images/slides_img/slide_1.jpg.jpg" class="card-img-top" alt="Filipiniana">
           <div class="card-body text-center">
             <h5 class="card-title font-weight-bold">Filipiniana</h5>
             <p class="card-text">Elegant traditional outfits for modern Filipinas.</p>
@@ -503,7 +493,7 @@ if (isset($_POST['submit_registration'])) {
       <!-- Subcategory: Kids Barong -->
       <div class="col-md-4 mb-4">
         <div class="card shadow-sm h-100">
-          <img src="assets/images/categories/kids-barong.jpg" class="card-img-top" alt="Kids Barong">
+          <img src="assets/images/slides_img/men-large.jpg" class="card-img-top" alt="Kids Barong">
           <div class="card-body text-center">
             <h5 class="card-title font-weight-bold">Kids Barong</h5>
             <p class="card-text">Adorable and elegant Barong for boys of all ages.</p>
@@ -530,7 +520,7 @@ if (isset($_POST['submit_registration'])) {
           <div class="row justify-content-center">
             <div class="col-md-8 text-center">
                <!--- CHANGE THIS TO EXACT IMAGE OF THE PERSON WHO GAVE THE FEEDBACK -->
-              <img src="assets/images/testimonials/user1.jpg" class="rounded-circle mb-3" width="100" height="100" alt="User 1">
+              <img src="assets/images/ai_f1.jpeg" class="rounded-circle mb-3" style="border-radius: 50%; height: 50px; width: 50px;" alt="User 1">
               <h5 class="font-weight-bold">Juan Dela Cruz</h5>
               <small class="text-muted">March 10, 2025 | 2:30 PM</small>
               <div class="mb-2">
@@ -546,7 +536,7 @@ if (isset($_POST['submit_registration'])) {
           <div class="row justify-content-center">
             <div class="col-md-8 text-center">
               <!--- CHANGE THIS TO EXACT IMAGE OF THE PERSON WHO GAVE THE FEEDBACK -->
-              <img src="assets/images/testimonials/user2.jpg" class="rounded-circle mb-3" width="100" height="100" alt="User 2">
+              <img src="assets/images/ai_f2.jpg" class="rounded-circle mb-3" style="border-radius: 50%; height: 50px; width: 50px;" alt="User 2">
               <h5 class="font-weight-bold">Maria Santos</h5>
               <small class="text-muted">March 12, 2025 | 10:15 AM</small>
               <div class="mb-2">
@@ -562,7 +552,7 @@ if (isset($_POST['submit_registration'])) {
           <div class="row justify-content-center">
             <div class="col-md-8 text-center">
                <!--- CHANGE THIS TO EXACT IMAGE OF THE PERSON WHO GAVE THE FEEDBACK -->
-              <img src="assets/images/testimonials/user3.jpg" class="rounded-circle mb-3" width="100" height="100" alt="User 3">
+              <img src="assets/images/ai_f3f.jpg" class="rounded-circle mb-3" style="border-radius: 50%; height: 50px; width: 50px;" alt="User 3">
               <h5 class="font-weight-bold">Pedro Gonzales</h5>
               <small class="text-muted">April 5, 2025 | 6:45 PM</small>
               <div class="mb-2">

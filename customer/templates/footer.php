@@ -22,9 +22,9 @@
             <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
                 <h5 class="mb-3">Information</h5>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><a href="#" class="text-light">About Us</a></li>
-                    <li class="mb-2"><a href="#" class="text-light">Contact</a></li>
-                    <li class="mb-2"><a href="#" class="text-light">Privacy Policy</a></li>
+                    <li class="mb-2"><a href="?page=about" class="text-light">About Us</a></li>
+                    <li class="mb-2"><a href="?page=contact" class="text-light">Contact</a></li>
+                    <li class="mb-2"><a href="?page=policy" class="text-light">Privacy Policy</a></li>
                 </ul>
             </div>
 
@@ -32,8 +32,8 @@
             <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
                 <h5 class="mb-3">Account</h5>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><a href="#" class="text-light">Shopping Cart</a></li>
-                    <li class="mb-2"><a href="#" class="text-light">Check Out</a></li>
+                    <li class="mb-2"><a href="?page=cart" class="text-light">Shopping Cart</a></li>
+                    <li class="mb-2"><a href="?page=checkout" class="text-light">Check Out</a></li>
                 </ul>
             </div>
 

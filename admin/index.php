@@ -126,6 +126,18 @@ if (mysqli_num_rows($result) > 0) {
 
 </div>
 
+
+<style>
+  #navbarUser {
+    margin-right: 250px;
+  }
+  @media (max-width: 768px) {
+    #navbarUser {
+      margin-right: 0;
+    }
+  }
+</style>
+
 <!-- MAIN CONTENT  -->
 <div class="content" id="mainContent">
 
@@ -134,11 +146,11 @@ if (mysqli_num_rows($result) > 0) {
     <div class="container-fluid d-flex justify-content-between align-items-center">
       <button class="toggle-btn" id="toggleSidebar"><i class="bi bi-list"></i></button>
       
-      <div class="d-flex align-items-center gap-3">
+      <div class="d-flex align-items-center gap-3" id="navbarUser">
         <!--- DIPLAY USERERNAME OF ADMIN -->
         <div class="fw-semibold mx-3"><?php echo $user_data['username'];?></div>
         <!--- LOGOUT ADMIN -->
-        <a href="#" class="text-decoration-none text-dark">
+        <a href="logout.php" class="text-decoration-none text-dark">
         <i class="bi bi-box-arrow-right"></i>
         </a>
       </div>

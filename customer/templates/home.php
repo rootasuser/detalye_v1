@@ -135,7 +135,7 @@ $slideshowResult = mysqli_query($conn, $slideshowQuery);
                             <p class="lead"><?php echo $row['product_category'] ?></p>
                             <p class="lead"><?php echo $row['product_sub_category'] ?? 'N/A' ?></p>
                             <p class="lead">₱<?php echo number_format($row['product_price'], 2) ?></p>
-                            <a href="#" class="btn btn-warning btn-lg"><i class="bi bi-cart4"></i> Shop Now</a>
+                            <a href="?page=shop" class="btn btn-warning btn-lg"><i class="bi bi-cart4"></i> Shop Now</a>
                         </div>
                     </div>
                 </div>

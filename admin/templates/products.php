@@ -223,7 +223,7 @@ function showAlert($title, $text, $icon, $reload = false) {
 }
 
 function showEditForm($product) {
-    // We'll use HTML output directly rather than just showing a modal through JS
+   
     echo "
     <div class='modal fade' id='editProductsModal' tabindex='-1' aria-labelledby='editProductsModalLabel' aria-hidden='true'>
       <div class='modal-dialog modal-xl modal-dialog-scrollable'>
@@ -274,7 +274,7 @@ function showEditForm($product) {
                   <textarea class='form-control' name='editProductDescription' rows='2'>" . htmlspecialchars($product['product_description']) . "</textarea>
                 </div>
                 <!-- Size -->
-                <div class='col-md-6'>
+                <div class='col-md-6 d-none'>
                   <label for='editProductSize' class='form-label'>Size</label>
                   <input type='text' class='form-control' name='editProductSize' value='" . htmlspecialchars($product['product_size']) . "'>
                 </div>
@@ -334,7 +334,7 @@ function showEditForm($product) {
               <th>Quantity</th>
               <th>Price</th>
               <th>Description</th>
-              <th>Size</th>
+              <th class="d-none">Size</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -354,7 +354,7 @@ function showEditForm($product) {
                 echo "<td>{$row['product_quantity']}</td>";
                 echo "<td>{$row['product_price']}</td>";
                 echo "<td title='" . htmlspecialchars($row['product_description']) . "'>" . htmlspecialchars(substr($row['product_description'], 0, 30)) . "...</td>";
-                echo "<td>" . htmlspecialchars($row['product_size']) . "</td>";
+                echo "<td class='d-none'>" . htmlspecialchars($row['product_size']) . "</td>";
                 echo "<td>
                         <div class='d-flex align-items-center justify-content-center'>
                         <button class='btn btn-sm btn-primary edit-btn mr-1' data-id='{$row['id']}'>Edit</button>
@@ -427,7 +427,7 @@ function showEditForm($product) {
             </div>
 
             <!-- Size -->
-            <div class="col-md-6">
+            <div class="col-md-6 d-none">
               <label for="productSize" class="form-label">Size</label>
               <input type="text" class="form-control" name="productSize" id="productSize">
             </div>
